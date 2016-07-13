@@ -21,7 +21,11 @@ app.post('/api', async (req, res) => {
     reply.text(`unknown command "${req.body.command}"`);
     return;
   }
-  command({ args: req.body.text, reply });
+  try {
+    await command({ args: req.body.text, reply });
+  } catch(e) {
+    reply.text(`error: "${e.message}"`);
+  }
 });
 
 app.listen(process.env.PORT);
