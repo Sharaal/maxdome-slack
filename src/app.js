@@ -10,9 +10,15 @@ app.post('/api', (req, res) => {
     .search(req.body.text)
     .then(assets => {
       if (assets.length) {
-        res.send(assets.join(', '));
+        res.send({
+          response_type: 'in_channel',
+          text: assets.join(', ')
+        });
       } else {
-        res.send(`no results found for "${req.body.text}"`);
+        res.send({
+          response_type: 'in_channel',
+          text: `no results found for "${req.body.text}"`
+        });
       }
     });
 });
