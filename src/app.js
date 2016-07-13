@@ -1,5 +1,3 @@
-'use strict';
-
 const app = require('express')();
 app.use(require('body-parser').urlencoded({ extended: true }));
 

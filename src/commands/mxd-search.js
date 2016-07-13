@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = ({ heimdall }) => async ({ args, reply }) => {
   const assets = await heimdall.search(args);
   if (assets.length) {
