@@ -2,7 +2,7 @@
 
 const rp = require('request-promise');
 
-module.exports = (apikey, appid, proxyOptions = {}) => {
+module.exports = ({ apikey, appid, proxyOptions = {} }) => {
   return {
     search: (term, searchOptions = {}) => {
       const options = Object.assign({}, proxyOptions.searchOptions || {}, searchOptions);
