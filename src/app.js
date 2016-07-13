@@ -3,7 +3,10 @@
 const app = require('express')();
 app.use(require('body-parser').urlencoded({ extended: true }));
 
-const heimdall = require('./proxies/heimdall.js')(process.env.HEIMDALL_APIKEY, process.env.HEIMDALL_APPID);
+const proxyOptions = {
+  searchOptions: { pageSize: process.env.HEIMDALL_PROXYOPTIONS_SEARCHOPTIONS_PAGESIZE || 3 }
+}
+const heimdall = require('./proxies/heimdall.js')(process.env.HEIMDALL_APIKEY, process.env.HEIMDALL_APPID, proxyOptions);
 
 app.post('/api', (req, res) => {
   heimdall

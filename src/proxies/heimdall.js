@@ -2,18 +2,21 @@
 
 const rp = require('request-promise');
 
-module.exports = (apikey, appid) => {
+module.exports = (apikey, appid, proxyOptions = {}) => {
   return {
-    search: term => {
-      const query = [
+    search: (term, searchOptions = {}) => {
+      const options = Object.assign({}, proxyOptions.searchOptions || {}, searchOptions);
+      const queries = [
         `apikey=${apikey}`,
         `appid=${appid}`,
-        'pageSize=3',
         `filter[]=contentTypeSeriesOrMovies`,
         `filter[]=search~${term}`,
-      ].join('&');
+      ];
+      if (options.pageSize) {
+        queries.push(`pageSize=${options.pageSize}`);
+      }
       return rp.get({
-        url: `https://heimdall.maxdome.de/interfacemanager-2.1/mxd/assets?${query}`,
+        url: `https://heimdall.maxdome.de/interfacemanager-2.1/mxd/assets?${queries.join('&')}`,
         headers: {
           accept: 'application/json',
           clienttype: 'Webportal',
