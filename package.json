@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "readmeFilename": "README.md",
-  "main": "src/app.js",
+  "main": "dest/app.js",
   "scripts": {
     "postinstall": "npm run transpile",
     "start": "dthrong",
