@@ -1,0 +1,27 @@
+{
+  "name": "maxdome-slack",
+  "description": "",
+  "version": "1.0.0",
+  "homepage": "http://github.com/dragonprojects/maxdome-slack",
+  "license": "MIT",
+  "private": true,
+  "readmeFilename": "README.md",
+  "main": "dest/app.js",
+  "scripts": {
+    "start": "dthrong",
+    "develop": "node -r dotenv/config src/app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "irc": "^0.5.0",
+    "request-promise": "^3.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dragonprojects/maxdome-slack.git"
+  }
+}
