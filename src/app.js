@@ -4,9 +4,7 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 const heimdall = require('./proxies/heimdall.js')({
   apikey: process.env.HEIMDALL_APIKEY,
   appid: process.env.HEIMDALL_APPID,
-  proxyOptions: {
-    searchOptions: { pageSize: process.env.HEIMDALL_PROXYOPTIONS_SEARCHOPTIONS_PAGESIZE || 3 }
-  }
+  pageSize: process.env.HEIMDALL_PAGESIZE || 3
 });
 const commands = {
   '/mxd-search': require('./commands/mxd-search.js')({ heimdall })

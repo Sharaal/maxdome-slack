@@ -1,9 +1,6 @@
 module.exports = class {
-  constructor(ids) {
+  constructor() {
     this.queries = [];
-    if (ids) {
-      this.filter('assetId', ids);
-    }
   }
 
   query(key, value) {
