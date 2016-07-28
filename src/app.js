@@ -7,6 +7,7 @@ const heimdall = require('./proxies/heimdall.js')({
   pageSize: process.env.HEIMDALL_PAGESIZE || 3
 });
 const commands = {
+  '/mxd-info': require('./commands/mxd-info.js'),
   '/mxd-search': require('./commands/mxd-search.js')({ heimdall })
 };
 
