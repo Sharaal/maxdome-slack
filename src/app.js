@@ -20,11 +20,11 @@ app.post('/api', async (req, res) => {
       }
       return url;
     },
-    send: message => {
-      if (Array.isArray(message)) {
-        message = message.join('\n');
+    send: text => {
+      if (Array.isArray(text)) {
+        text = text.join('\n');
       }
-      res.send({ response_type: 'in_channel', text: message });
+      res.send({ response_type: 'in_channel', text });
     }
   };
   if (!command) {
