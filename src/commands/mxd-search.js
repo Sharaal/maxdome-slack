@@ -5,10 +5,10 @@ module.exports = ({ heimdall }) => async ({ args, reply }) => {
     .filter('search', args);
   const assets = await heimdall(query);
   if (assets.length) {
-    const lines = assets.map(asset => `${asset.title} ${asset.url}`);
-    lines.push(`<https://store.maxdome.de/suche?search=${args}|show all...>`);
-    reply.text(lines.join('\n'));
+    const lines = assets.map(asset => reply.link(asset.url, asset.title));
+    lines.push(reply.link(`https://store.maxdome.de/suche?search=${args}`, 'show all...'));
+    reply.send(lines);
   } else {
-    reply.text(`no results found for "${args}"`);
+    reply.send(`no results found for "${args}"`);
   }
 };

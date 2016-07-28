@@ -14,16 +14,27 @@ const commands = {
 app.post('/api', async (req, res) => {
   const command = commands[req.body.command];
   const reply = {
-    text: text => { res.send({ response_type: 'in_channel', text }); }
+    link: (url, label) => {
+      if (label) {
+        return `<${url}|${label}>`;
+      }
+      return url;
+    },
+    send: message => {
+      if (Array.isArray(message)) {
+        message = message.join('\n');
+      }
+      res.send({ response_type: 'in_channel', message });
+    }
   };
   if (!command) {
-    reply.text(`unknown command "${req.body.command}"`);
+    reply.send(`unknown command "${req.body.command}"`);
     return;
   }
   try {
     await command({ args: req.body.text, reply });
   } catch(e) {
-    reply.text(`error: "${e.message}"`);
+    reply.send(`error: "${e.message}"`);
   }
 });
 
