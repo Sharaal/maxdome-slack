@@ -1,14 +1,14 @@
 const app = require('express')();
 app.use(require('body-parser').urlencoded({ extended: true }));
 
-const heimdall = require('./proxies/heimdall.js')({
+const heimdall = require('mxd-heimdall').heimdall({
   apikey: process.env.HEIMDALL_APIKEY,
   appid: process.env.HEIMDALL_APPID,
   pageSize: process.env.HEIMDALL_PAGESIZE || 3
 });
 const commands = {
-  '/mxd-info': require('./commands/mxd-info.js'),
-  '/mxd-search': require('./commands/mxd-search.js')({ heimdall })
+  '/mxd-info': require('info-command'),
+  '/mxd-search': require('mxd-search-command')({ heimdall })
 };
 
 app.post('/api', async (req, res) => {
