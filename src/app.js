@@ -11,7 +11,7 @@ const commands = {
   '/mxd-search': require('mxd-search-command')({ heimdall })
 };
 
-app.post('/api', async (req, res) => {
+app.post('/webhook', async (req, res) => {
   const command = commands[req.body.command];
   const reply = {
     link: (url, label) => {
