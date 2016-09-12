@@ -1,14 +1,17 @@
 const app = require('express')();
 app.use(require('body-parser').urlencoded({ extended: true }));
 
-const heimdall = require('mxd-heimdall').heimdall({
+const Heimdall = require('mxd-heimdall').Heimdall;
+const heimdall = new Heimdall({
   apikey: process.env.HEIMDALL_APIKEY,
-  appid: process.env.HEIMDALL_APPID,
-  pageSize: process.env.HEIMDALL_PAGESIZE || 3
+  appid: process.env.HEIMDALL_APPID
 });
 const commands = {
   '/mxd-info': require('info-command'),
-  '/mxd-search': require('mxd-search-command')({ heimdall })
+  '/mxd-search': require('mxd-search-command')({
+    heimdall: heimdall,
+    pageSize: process.env.HEIMDALL_PAGESIZE || 3
+  })
 };
 
 app.post('/webhook', async (req, res) => {
