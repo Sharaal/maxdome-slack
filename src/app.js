@@ -6,8 +6,18 @@ const heimdall = new Heimdall({
   apikey: process.env.HEIMDALL_APIKEY,
   appid: process.env.HEIMDALL_APPID
 });
+
+const sessionStorage = new Map();
+
+const mxdAuthCommands = require('mxd-auth-commands');
+const mxdNotepadCommands = require('mxd-notepad-commands');
+
 const commands = {
   '/mxd-info': require('info-command').commands.info,
+  '/mxd-login': mxdAuthCommands.commands['mxd-login']({ heimdall, sessionStorage }),
+  '/mxd-logout': mxdAuthCommands.commands['mxd-logout']({ heimdall, sessionStorage }),
+  '/mxd-notepad-add': mxdNotepadCommands.commands['mxd-notepad-add']({ heimdall }),
+  '/mxd-notepad-remove': mxdNotepadCommands.commands['mxd-notepad-remove']({ heimdall }),
   '/mxd-search': require('mxd-search-command').commands['mxd-search']({
     AssetsQuery: AssetsQuery,
     heimdall: heimdall,
@@ -16,13 +26,15 @@ const commands = {
 };
 
 app.post('/webhook', async (req, res) => {
+  const loggedin = require('./modules/loggedin.js')({ req });
   const reply = require('./modules/reply.js')({ res });
+  const heimdallLoggedin = mxdAuthCommands.modules['heimdall-loggedin']({ sessionStorage })({ loggedin, reply });
   try {
     const { commandName, args } = require('./modules/commandName.js')({ req });
     if (!commands[commandName]) {
       throw new Error(`unknown command "${commandName}"`);
     }
-    await commands[commandName]({ args, reply });
+    await commands[commandName]({ args, heimdallLoggedin, loggedin, reply });
   } catch(e) {
     reply.send(`error "${e.message}"`);
   }
