@@ -16,27 +16,13 @@ const commands = {
 };
 
 app.post('/webhook', async (req, res) => {
-  const command = commands[req.body.command];
-  const reply = {
-    link: (url, label) => {
-      if (label) {
-        return `<${url}|${label}>`;
-      }
-      return url;
-    },
-    send: text => {
-      if (Array.isArray(text)) {
-        text = text.join('\n');
-      }
-      res.send({ response_type: 'in_channel', text });
-    }
-  };
-  if (!command) {
-    reply.send(`unknown command "${req.body.command}"`);
-    return;
-  }
+  const reply = require('./modules/reply.js')({ res });
   try {
-    await command({ args: req.body.text, reply });
+    const { commandName, args } = require('./modules/commandName.js')({ req });
+    if (!commands[commandName]) {
+      throw new Error(`unknown command "${commandName}"`);
+    }
+    await commands[commandName]({ args, reply });
   } catch(e) {
     reply.send(`error "${e.message}"`);
   }
