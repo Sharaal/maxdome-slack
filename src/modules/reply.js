@@ -6,11 +6,15 @@ module.exports = ({ res }) => {
       }
       return url;
     },
-    send: text => {
+    send: (text, attachements) => {
       if (Array.isArray(text)) {
         text = text.join('\n');
       }
-      res.send({ response_type: 'in_channel', text });
+      res.send({
+        response_type: 'in_channel',
+        text: text,
+        attachements: attachements
+      });
     }
   };
 };

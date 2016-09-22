@@ -20,7 +20,7 @@ const commands = {
   '/mxd-logout': mxdAuthCommands.commands['mxd-logout']({ heimdall, sessionStorage }),
   '/mxd-notepad-add': mxdNotepadCommands.commands['mxd-notepad-add']({ heimdall }),
   '/mxd-notepad-remove': mxdNotepadCommands.commands['mxd-notepad-remove']({ heimdall }),
-  '/mxd-search': require('mxd-search-command').commands['mxd-search']({
+  '/mxd-search': require('./commands/mxd-search.js')({
     AssetsQuery: AssetsQuery,
     heimdall: heimdall,
     pageSize: process.env.HEIMDALL_PAGESIZE || 3
