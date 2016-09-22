@@ -6,7 +6,7 @@ module.exports = ({ AssetsQuery, heimdall, hostname, pageSize }) => async ({ arg
     .query('pageSize', pageSize);
   const assets = await heimdall.getAssets(query);
   if (assets.length) {
-    const attachements = assets.map(asset => {
+    const attachments = assets.map(asset => {
       return {
         title: reply.link(`https://${hostname}/${asset.id}`, asset.title),
         text: asset.description,
@@ -19,7 +19,7 @@ module.exports = ({ AssetsQuery, heimdall, hostname, pageSize }) => async ({ arg
     });
     reply.send(
       `results found, ${reply.link(`https://${hostname}/suche?search=${encodeURIComponent(args)}`, 'show all...')}`,
-      attachements
+      attachments
     );
   } else {
     reply.send(`no results found for "${args}"`);

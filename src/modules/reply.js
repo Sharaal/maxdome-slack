@@ -6,14 +6,14 @@ module.exports = ({ res }) => {
       }
       return url;
     },
-    send: (text, attachements) => {
+    send: (text, attachments) => {
       if (Array.isArray(text)) {
         text = text.join('\n');
       }
       res.send({
         response_type: 'in_channel',
         text: text,
-        attachements: attachements
+        attachments: attachments
       });
     }
   };
