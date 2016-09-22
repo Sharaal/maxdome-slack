@@ -11,6 +11,7 @@ module.exports = ({ AssetsQuery, heimdall, hostname, pageSize }) => async ({ arg
         title: reply.link(`https://${hostname}/${asset.id}`, asset.title),
         text: asset.description,
         actions: [{
+          type: 'button',
           text: 'Merken',
           name: 'mxd-notepad-add',
           value: asset.id
