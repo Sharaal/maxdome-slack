@@ -19,7 +19,7 @@ module.exports = ({ AssetsQuery, heimdall, hostname, pageSize }) => async ({ arg
       };
     });
     reply.send(
-      `results found, ${reply.link(`https://${hostname}/suche?search=${encodeURIComponent(args)}`, 'show all...')}`,
+      reply.link(`https://${hostname}/suche?search=${encodeURIComponent(args)}`, 'show all...'),
       attachments
     );
   } else {
